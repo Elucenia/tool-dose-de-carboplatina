@@ -1,0 +1,246 @@
+{
+  "tool": {
+    "id": "dose-de-carboplatina",
+    "title": "Dose de carboplatina (Calvert)",
+    "short": "Dose pela AUC-alvo e pela função renal",
+    "desc": "Dose de carboplatina pela fórmula de Calvert (AUC × [TFG + 25]), com Cockcroft-Gault ou TFG medida e limite de 125 mL/min na depuração.",
+    "lead": "Calcula a dose total de carboplatina (em mg, não em mg/m²) para atingir a área sob a curva desejada, a partir da função renal.",
+    "spec": [
+      "oncologia-clinica",
+      "ginecologia-e-obstetricia",
+      "pneumologia"
+    ],
+    "tier": 1,
+    "fields": [
+      [
+        "auc",
+        "AUC-alvo",
+        "num",
+        {
+          "min": 1,
+          "max": 10,
+          "step": 0.5,
+          "unit": "mg/mL·min",
+          "ph": "5"
+        }
+      ],
+      [
+        "idade",
+        "Idade",
+        "num",
+        {
+          "min": 18,
+          "max": 100,
+          "step": 1,
+          "unit": "anos",
+          "ph": "60"
+        }
+      ],
+      [
+        "peso",
+        "Peso",
+        "num",
+        {
+          "min": 30,
+          "max": 250,
+          "step": 0.1,
+          "unit": "kg",
+          "ph": "70"
+        }
+      ],
+      [
+        "cr",
+        "Creatinina sérica",
+        "num",
+        {
+          "min": 0.2,
+          "max": 15,
+          "step": 0.01,
+          "unit": "mg/dL",
+          "ph": "1,0"
+        }
+      ],
+      [
+        "sexo",
+        "Sexo",
+        "radio",
+        {
+          "opts": {
+            "M": "Masculino",
+            "F": "Feminino"
+          }
+        }
+      ],
+      [
+        "tfg",
+        "TFG medida (opcional; substitui o Cockcroft-Gault)",
+        "num",
+        {
+          "min": 5,
+          "max": 250,
+          "step": 1,
+          "unit": "mL/min",
+          "ph": "",
+          "opt": true
+        }
+      ]
+    ],
+    "formula": "<p><strong>Dose (mg) = AUC-alvo × (TFG + 25)</strong> (Calvert). A TFG, em mL/min, é a medida (EDTA-<sup>51</sup>Cr, iohexol) ou estimada por Cockcroft-Gault: (140 − idade) × peso ÷ (72 × creatinina), × 0,85 na mulher.</p><p>A depuração usada é limitada a <strong>125 mL/min</strong>, de modo que a dose máxima é AUC × 150 (ex.: 750 mg para AUC 5).</p>",
+    "table": [
+      [
+        "AUC-alvo",
+        "Uso típico"
+      ],
+      [
+        "4–6",
+        "Esquemas combinados (ex.: carboplatina + paclitaxel)"
+      ],
+      [
+        "5–7",
+        "Monoterapia em câncer de ovário"
+      ],
+      [
+        "AUC × 150",
+        "Dose máxima (depuração limitada a 125 mL/min)"
+      ]
+    ],
+    "table_note": "A AUC-alvo vem do protocolo de cada esquema; esta tabela só ilustra a faixa usual.",
+    "tips": [
+      "A fórmula já devolve a dose total em mg: <strong>não multiplique pela superfície corporal</strong>.",
+      "Com creatinina medida por método enzimático/IDMS (mais baixa que a do método de Jaffé), o Cockcroft-Gault superestima a depuração; por isso a FDA recomenda o teto de 125 mL/min, e muitos protocolos também fixam um valor mínimo de creatinina.",
+      "No obeso, o Cockcroft-Gault com peso real superestima a depuração; siga o protocolo da instituição (peso ajustado ou TFG medida).",
+      "Pacientes caquéticos, amputados ou com massa muscular muito baixa: prefira a TFG medida, porque a creatinina baixa infla a estimativa."
+    ],
+    "sources": [
+      [
+        "Calvert AH et al. Carboplatin dosage: prospective evaluation of a simple formula based on renal function. J Clin Oncol, 1989.",
+        "https://doi.org/10.1200/JCO.1989.7.11.1748"
+      ],
+      [
+        "Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. Nephron, 1976.",
+        "https://doi.org/10.1159/000180580"
+      ]
+    ],
+    "cases": [
+      [
+        "Homem, 60 anos, 70 kg, Cr 1,0, AUC 5: CG 77,8 → 513,9 mg",
+        {
+          "auc": 5,
+          "idade": 60,
+          "peso": 70,
+          "cr": 1,
+          "sexo": "M"
+        },
+        {
+          "raw": {
+            "cg": 77.78,
+            "dose": 513.89
+          },
+          "level": "info",
+          "tol": 0.1
+        }
+      ],
+      [
+        "Mulher, 50 anos, 60 kg, Cr 0,5, AUC 6: CG 127,5 limitado a 125 → 900 mg",
+        {
+          "auc": 6,
+          "idade": 50,
+          "peso": 60,
+          "cr": 0.5,
+          "sexo": "F"
+        },
+        {
+          "raw": {
+            "cg": 127.5,
+            "gfr": 125,
+            "dose": 900
+          },
+          "level": "mid"
+        }
+      ],
+      [
+        "TFG medida 100 mL/min, AUC 5: 5 × 125 = 625 mg",
+        {
+          "auc": 5,
+          "idade": 60,
+          "peso": 70,
+          "cr": 1,
+          "sexo": "M",
+          "tfg": 100
+        },
+        {
+          "raw": {
+            "gfr": 100,
+            "dose": 625
+          },
+          "main": "625"
+        }
+      ],
+      [
+        "Corte: TFG medida 125 mL/min, AUC 4: 600 mg, sem limitação",
+        {
+          "auc": 4,
+          "idade": 40,
+          "peso": 80,
+          "cr": 0.9,
+          "sexo": "M",
+          "tfg": 125
+        },
+        {
+          "raw": {
+            "dose": 600
+          },
+          "level": "info"
+        }
+      ]
+    ],
+    "batch": "onco-diagnostico",
+    "kind": "Calculadora",
+    "config": null,
+    "areaId": "onco-diagnostico",
+    "clinicalReview": "pending",
+    "sourceReview": "pending",
+    "sourceFile": "app/content/ferramentas/onco-diagnostico.php",
+    "arithmeticTest": {
+      "status": "passed",
+      "testedAt": "2026-09-25",
+      "total": 4,
+      "passed": 4,
+      "failures": []
+    },
+    "independentArithmeticTest": {
+      "status": "not-tested",
+      "testedAt": null,
+      "total": 0,
+      "passed": 0,
+      "cases": []
+    }
+  },
+  "review": {
+    "id": "dose-de-carboplatina",
+    "status": "restricted",
+    "reason": "O código limita toda TFG a 125 mL/min, inclusive medida. ADDIKD/eviQ orienta não aplicar esse teto universal e prefere TFG medida ou estimativa adequada ao contexto. Divergência capaz de alterar dose; suspender execução até protocolo, método renal e jurisdição explícitos.",
+    "sourceUrl": "https://www.eviq.org.au/clinical-resources/eviq-calculators/4171-carboplatin-dose-calculator",
+    "sourceTitle": "eviQ — Carboplatin Dose Calculator / ADDIKD",
+    "sourceDate": "2022-10-24 (publicação; página consultada em 2026-09-25)",
+    "publisherRegion": "Austrália / eviQ–ADDIKD",
+    "checkedAt": "2026-09-25",
+    "clinicalValidation": "not-performed",
+    "suppressLegacyFormula": true,
+    "formulaOverride": "Fórmula de Calvert: dose total (mg) = AUC-alvo × [TFG (mL/min) + 25]. O método renal, a AUC e qualquer teto dependem do protocolo; a implementação importada está suspensa.",
+    "replacementReadings": [
+      {
+        "url": "https://www.eviq.org.au/clinical-resources/eviq-calculators/4171-carboplatin-dose-calculator",
+        "title": "eviQ — Carboplatin Dose Calculator / ADDIKD",
+        "date": "2022-10-24 (publicação; página consultada em 2026-09-25)",
+        "region": "Austrália / eviQ–ADDIKD"
+      }
+    ]
+  },
+  "sourceFile": {
+    "path": "app/content/ferramentas/onco-diagnostico.php",
+    "sha256": "29e7fd6aab1f8bf937a34267255855c21f804696da2b4817d6197578cdcbe743",
+    "bytes": 78570
+  },
+  "clinicalValidation": "not-performed"
+}

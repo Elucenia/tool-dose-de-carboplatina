@@ -1,0 +1,107 @@
+[
+  {
+    "label": "Homem, 60 anos, 70 kg, Cr 1,0, AUC 5: CG 77,8 → 513,9 mg",
+    "input": {
+      "auc": 5,
+      "idade": 60,
+      "peso": 70,
+      "cr": 1,
+      "sexo": "M"
+    },
+    "expected": {
+      "raw": {
+        "cg": 77.78,
+        "dose": 513.89
+      },
+      "level": "info",
+      "tol": 0.1
+    },
+    "originalInput": {
+      "auc": 5,
+      "idade": 60,
+      "peso": 70,
+      "cr": 1,
+      "sexo": "M"
+    },
+    "expandedZeroOptions": []
+  },
+  {
+    "label": "Mulher, 50 anos, 60 kg, Cr 0,5, AUC 6: CG 127,5 limitado a 125 → 900 mg",
+    "input": {
+      "auc": 6,
+      "idade": 50,
+      "peso": 60,
+      "cr": 0.5,
+      "sexo": "F"
+    },
+    "expected": {
+      "raw": {
+        "cg": 127.5,
+        "gfr": 125,
+        "dose": 900
+      },
+      "level": "mid"
+    },
+    "originalInput": {
+      "auc": 6,
+      "idade": 50,
+      "peso": 60,
+      "cr": 0.5,
+      "sexo": "F"
+    },
+    "expandedZeroOptions": []
+  },
+  {
+    "label": "TFG medida 100 mL/min, AUC 5: 5 × 125 = 625 mg",
+    "input": {
+      "auc": 5,
+      "idade": 60,
+      "peso": 70,
+      "cr": 1,
+      "sexo": "M",
+      "tfg": 100
+    },
+    "expected": {
+      "raw": {
+        "gfr": 100,
+        "dose": 625
+      },
+      "main": "625"
+    },
+    "originalInput": {
+      "auc": 5,
+      "idade": 60,
+      "peso": 70,
+      "cr": 1,
+      "sexo": "M",
+      "tfg": 100
+    },
+    "expandedZeroOptions": []
+  },
+  {
+    "label": "Corte: TFG medida 125 mL/min, AUC 4: 600 mg, sem limitação",
+    "input": {
+      "auc": 4,
+      "idade": 40,
+      "peso": 80,
+      "cr": 0.9,
+      "sexo": "M",
+      "tfg": 125
+    },
+    "expected": {
+      "raw": {
+        "dose": 600
+      },
+      "level": "info"
+    },
+    "originalInput": {
+      "auc": 4,
+      "idade": 40,
+      "peso": 80,
+      "cr": 0.9,
+      "sexo": "M",
+      "tfg": 125
+    },
+    "expandedZeroOptions": []
+  }
+]
