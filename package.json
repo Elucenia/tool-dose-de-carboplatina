@@ -1,7 +1,7 @@
 {
   "name": "@elucenia/tool-dose-de-carboplatina",
   "version": "0.1.0",
-  "description": "Dose de carboplatina (Calvert) · Elucenia: reprodução técnica de fórmula ou escore clínico, sem dependências, para navegador e Node.js.",
+  "description": "Dose de carboplatina (Calvert) · ELUCENIA: reprodução técnica de fórmula ou escore clínico, sem dependências, para navegador e Node.js.",
   "keywords": [
     "elucenia",
     "medical-calculator",
